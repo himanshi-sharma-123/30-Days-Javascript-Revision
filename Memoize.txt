@@ -1,0 +1,36 @@
+function memoize(fn) {
+    let memo = {};
+
+    return function(...args) {
+        const argString = JSON.stringify(args);
+
+        if (argString in memo) {
+            return memo[argString];
+        } else {
+            let temp = fn(...args);
+            memo[argString] = temp;
+            return temp;
+        }
+    }
+}
+
+EXPLANATION:
+
+let memo = {};: Initialize an empty dictionary to store the results of function calls.
+
+return function(...args) {: Define the memoized function, which takes any number of arguments.
+
+const argString = JSON.stringify(args);: Convert the arguments into a string.
+
+if (argString in memo) {: Check if the string representation of the arguments is a key in the memo dictionary.
+
+return memo[argString];: If the arguments have been called before, return the stored result.
+
+} else {: If the arguments have not been called before, execute the following code.
+
+let temp = fn(...args);: Call the original function fn with the arguments.
+
+memo[argString] = temp;: Store the result of the function call in the memo dictionary with argString as the key.
+
+return temp;: Return the result of the function call.
+
