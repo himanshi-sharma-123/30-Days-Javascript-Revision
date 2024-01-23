@@ -1,0 +1,37 @@
+Approach
+To solve this problem, we can use an iterative approach with a stack.
+
+Initialize a stack with the elements of the array along with their
+corresponding depth levels. Each element is represented as a pair [item,
+depth].
+Initialize an empty array to store the flattened result.
+Enter a while loop, which continues as long as there are elements in the
+stack.
+Within each iteration of the loop, retrieve the top element [item, depth] from
+the stack.
+If the item is an array and the current depth depth is greater than 0, it
+means the element is a subarray that needs to be further flattened.
+Iterate over the subarray, and for each element, push it back to the stack
+along with a reduced depth level (depth - 1).
+If the item is not an array or the depth is 0, it means the element is a nonarray item that should be directly added to the result array.
+Continue the loop until there are no more elements in the stack.
+Finally, return the flattened result array.
+
+Code:
+
+var flat = function(arr, depth) {
+  const stack = [...arr.map(item => [item, depth])];
+  const result = [];
+
+  while (stack.length > 0) {
+    const [item, depth] = stack.pop();
+
+    if (Array.isArray(item) && depth > 0) {
+      stack.push(...item.map(subItem => [subItem, depth - 1]));
+    } else {
+      result.push(item);
+    }
+  }
+
+  return result.reverse();
+};
